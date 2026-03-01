@@ -22,7 +22,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # ── Config from environment variables (GitHub Secrets) ────────
 WHATSAPP_PHONE   = os.environ["WHATSAPP_PHONE"]    # e.g. +919876543210
 CALLMEBOT_APIKEY = os.environ["CALLMEBOT_APIKEY"]  # e.g. 4829301
-BMS_URL = "https://in.bookmyshow.com/sports/icc-men-s-t20-world-cup-2026-semi-final-2/ET00474271"
+BMS_URL = "https://in.bookmyshow.com/sports/aarambh-2026/ET00485672"
 STATE_FILE = "last_status.json"                    # Persists status between runs
 # ──────────────────────────────────────────────────────────────
 
