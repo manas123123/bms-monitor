@@ -1,4 +1,47 @@
-{
-  "status": "unknown",
-  "updated_at": "2026-01-01T00:00:00"
-}
+name: BMS Ticket Monitor
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'   # Runs every 5 minutes, 24/7
+  workflow_dispatch:         # Also allows manual trigger from GitHub UI
+
+jobs:
+  check-tickets:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the repo so the script + state file are available
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2. Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. Install Python dependencies
+      - name: Install dependencies
+        run: pip install selenium requests
+
+      # 4. Install Chrome (pre-installed on ubuntu-latest, this ensures latest)
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      # 5. Run the monitor script
+      - name: Run BMS Monitor
+        env:
+          WHATSAPP_PHONE:   ${{ secrets.WHATSAPP_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+        run: python bms_monitor_github.py
+
+      # 6. Save the status file back to the repo so next run knows last state
+      - name: Save status to repo
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add last_status.json
+          git diff --staged --quiet || git commit -m "chore: update BMS status [skip ci]"
+          git push
