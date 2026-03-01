@@ -20,8 +20,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 # ── Config from environment variables (GitHub Secrets) ────────
-WHATSAPP_PHONE   = os.environ["+14376635396"]    # e.g. +919876543210
-CALLMEBOT_APIKEY = os.environ["4995068"]  # e.g. 4829301
+WHATSAPP_PHONE   = os.environ["WHATSAPP_PHONE"]    # e.g. +919876543210
+CALLMEBOT_APIKEY = os.environ["CALLMEBOT_APIKEY"]  # e.g. 4829301
 BMS_URL = "https://in.bookmyshow.com/sports/icc-men-s-t20-world-cup-2026-semi-final-2/ET00474271"
 STATE_FILE = "last_status.json"                    # Persists status between runs
 # ──────────────────────────────────────────────────────────────
